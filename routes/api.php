@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Autenticação
-Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Produtos
-Route::apiResource('/products', ProductController::class);
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::put('/products/{id}', [ProductController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->middleware('auth:sanctum');
