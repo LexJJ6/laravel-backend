@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,16 +39,25 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        if(Auth::check())
+        try
         {
-            $product = Product::withTrashed()->find($id);
-        }
-        else
-        {
-            $product = Product::find($id);
-        }
+            if (Auth::check())
+            {
+                $product = Product::withTrashed()->findOrFail($id);
+            }
+            else
+            {
+                $product = Product::findOrFail($id);
+            }
 
-        return response()->json($product);
+            return response()->json($product);
+        }
+        catch(Exception $exception)
+        {
+            return response()->json([
+                'message' => 'Utilizador não encontrado!'
+            ], 404);
+        }
     }
 
     /**
