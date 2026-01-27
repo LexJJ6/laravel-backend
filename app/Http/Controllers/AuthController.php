@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginAuthRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -9,14 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginAuthRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $data = $request->validated();
 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password]))
+        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
         {
             $user = Auth::user();
             $token = $user->createToken('Challenge')->plainTextToken;
