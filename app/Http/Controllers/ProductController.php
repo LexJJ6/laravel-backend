@@ -103,6 +103,17 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try
+        {
+            Product::destroy($id);
+
+            return response()->json(null, 204);
+        }
+        catch(Exception $exception)
+        {
+            return response()->json([
+                'message' => 'Ocorreu um erro ao eliminar o produto'
+            ], 400);
+        }
     }
 }
