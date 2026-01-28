@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,9 +30,24 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        try
+        {
+            $product = new Product();
+            $product->fill($data);
+            $product->save();
+
+            return response()->json($product, 201);
+        }
+        catch(Exception $exception)
+        {
+            return response()->json([
+                'message' => 'Ocorreu um erro ao criar o produto'
+            ], 400);
+        }
     }
 
     /**
@@ -55,7 +71,7 @@ class ProductController extends Controller
         catch(Exception $exception)
         {
             return response()->json([
-                'message' => 'Utilizador não encontrado!'
+                'message' => 'Utilizador não encontrado'
             ], 404);
         }
     }
