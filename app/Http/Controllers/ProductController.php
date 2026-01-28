@@ -17,11 +17,13 @@ class ProductController extends Controller
     {
         if(Auth::check())
         {
-            $products = Product::withTrashed()->get();
+            $products = Product::withTrashed()->orderBy('id')->get();
+            // return response()->json(['message' => 'autenticado', 'products' => $products], 200);
         }
         else
         {
             $products = Product::all(); // não inclui os soft deleted como acima com withTrashed
+            // return response()->json(['message' => 'nao autenticado', 'products' => $products], 200);
         }
 
         return response()->json($products);
