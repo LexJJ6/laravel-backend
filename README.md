@@ -4,7 +4,7 @@ A aplicação é um sistema interno de gestão, pelo que todas as funcionalidade
 
 # Instruções
 
-git clone <url-do-repositorio>
+git clone url-do-repositorio
 
 composer install
 
