@@ -22,7 +22,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Login efetuado com sucesso',
                 'token' => $token
-            ]);
+            ], 200);
         }
 
         return response()->json([
@@ -32,12 +32,13 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // $request->user()->currentAccessToken()->delete();
         $request->user()->tokens()->each(function ($token) {
             $token->delete();
         });
 
         return response()->json([
             'message' => 'Logout efetuado com sucesso'
-        ]);
+        ], 200);
     }
 }
