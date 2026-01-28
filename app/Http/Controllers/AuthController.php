@@ -67,7 +67,7 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                'message' => 'Email ou palavra-passe errados'
+                'message' => 'Credenciais inválidas'
             ], 401);
         }
 
@@ -82,6 +82,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // adicionar funcionalidade de logout em todos os dispositivos como já tive
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([

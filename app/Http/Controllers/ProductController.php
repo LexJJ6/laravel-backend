@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withTrashed()->orderBy('id')->get();
+        $products = Product::orderBy('id')->get();
         return response()->json($products);
     }
 
@@ -49,16 +49,7 @@ class ProductController extends Controller
     {
         try
         {
-            // if (Auth::check())
-            // {
-            //     $product = Product::withTrashed()->findOrFail($id);
-            // }
-            // else
-            // {
-            //     $product = Product::findOrFail($id);
-            // }
-
-            $product = Product::withTrashed()->findOrFail($id);
+            $product = Product::findOrFail($id);
             return response()->json($product);
         }
         catch(Exception $exception)
