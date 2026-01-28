@@ -16,12 +16,15 @@ class AuthController extends Controller
 
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']]))
         {
-            $user = Auth::user();
-            $token = $user->createToken('Challenge')->plainTextToken;
+            $request->session()->regenerate();
+
+            // $user = Auth::user();
+            // $token = $user->createToken('Challenge')->plainTextToken;
 
             return response()->json([
                 'message' => 'Login efetuado com sucesso',
-                'token' => $token
+                'user' => Auth::user(),
+                // 'token' => $token
             ], 200);
         }
 
@@ -33,9 +36,13 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         // $request->user()->currentAccessToken()->delete();
-        $request->user()->tokens()->each(function ($token) {
-            $token->delete();
-        });
+        // $request->user()->tokens()->each(function ($token) {
+        //     $token->delete();
+        // });
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return response()->json([
             'message' => 'Logout efetuado com sucesso'
