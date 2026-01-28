@@ -15,17 +15,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        if(Auth::check())
-        {
-            $products = Product::withTrashed()->orderBy('id')->get();
-            // return response()->json(['message' => 'autenticado', 'products' => $products], 200);
-        }
-        else
-        {
-            $products = Product::all(); // não inclui os soft deleted como acima com withTrashed
-            // return response()->json(['message' => 'nao autenticado', 'products' => $products], 200);
-        }
+        // if(Auth::check())
+        // {
+        //     $products = Product::withTrashed()->orderBy('id')->get();
+        //     // return response()->json(['message' => 'autenticado', 'products' => $products], 200);
+        // }
+        // else
+        // {
+        //     $products = Product::all(); // não inclui os soft deleted como acima com withTrashed
+        //     // return response()->json(['message' => 'nao autenticado', 'products' => $products], 200);
+        // }
 
+        $products = Product::withTrashed()->orderBy('id')->get();
         return response()->json($products);
     }
 
@@ -59,15 +60,16 @@ class ProductController extends Controller
     {
         try
         {
-            if (Auth::check())
-            {
-                $product = Product::withTrashed()->findOrFail($id);
-            }
-            else
-            {
-                $product = Product::findOrFail($id);
-            }
+            // if (Auth::check())
+            // {
+            //     $product = Product::withTrashed()->findOrFail($id);
+            // }
+            // else
+            // {
+            //     $product = Product::findOrFail($id);
+            // }
 
+            $product = Product::withTrashed()->findOrFail($id);
             return response()->json($product);
         }
         catch(Exception $exception)
