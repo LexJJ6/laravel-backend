@@ -73,7 +73,7 @@ class ProductController extends Controller
         catch(Exception $exception)
         {
             return response()->json([
-                'message' => 'Utilizador não encontrado'
+                'message' => 'Produto não encontrado'
             ], 404);
         }
     }
