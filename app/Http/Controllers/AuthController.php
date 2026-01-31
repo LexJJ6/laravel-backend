@@ -33,8 +33,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // adicionar funcionalidade de logout em todos os dispositivos como já tive
-        $request->user()->currentAccessToken()->delete();
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return response()->json([
             'message' => 'Logout efetuado com sucesso'
